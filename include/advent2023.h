@@ -7,6 +7,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stb_ds.h>
 
 #define MAX_LINE 4096
 
@@ -16,7 +17,7 @@ typedef struct {
 } Content;
 
 
-Content read_input();
+void read_input(Content *c);
 void free_content(Content* c);
 
 // TODO: Reference additional headers your program requires here.

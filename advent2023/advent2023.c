@@ -3,18 +3,21 @@
 
 #include <advent2023.h>
 
-Content read_input()
+static void replace_newline(char* str)
 {
-	Content res = {
-		.size = 0,
-		.lines = NULL,
-	};
+	char* ptr;
+	if ((ptr = strchr(str, '\n')) != NULL) {
+		*ptr = '\0';
+	}
+}
 
+void read_input(Content *res)
+{
 	int line_cnt = 0;
 
-	char *lines = malloc(sizeof(char*) * 20);
+	res->lines = malloc(sizeof(char*) * 20);
 
-	if (lines == NULL) {
+	if (res->lines == NULL) {
 		fprintf(stderr, "Failed to allocate memory.");
 		exit(-1);
 	}
@@ -26,8 +29,8 @@ Content read_input()
 
 
 		if (line_cnt % 20 == 0 && line_cnt != 0) {
-			char* l_ptr = realloc(*lines, (line_cnt + 20) * sizeof(char*));
-			*lines = l_ptr;
+			char* l_ptr = realloc(res->lines, (line_cnt + 20) * sizeof(char*));
+			res->lines = l_ptr;
 		}
 
 		if (*line == '\0') {
@@ -35,14 +38,13 @@ Content read_input()
 		}
 		else {
 			size_t line_len = strlen(line);
-			*(lines+line_cnt) = malloc(line_len);
-			res.lines[line_len] = '\0';
-			strcpy(*(lines+line_cnt), line);
+			*(res->lines+line_cnt) = malloc(line_len + 1);
+			strcpy(*(res->lines+line_cnt), line);
+			replace_newline(*(res->lines + line_cnt));
 		}
 		line_cnt++;
 	}
-	res.lines = lines;
-	res.size = line_cnt;
+	res->size = line_cnt;
 	return res;
 }
 

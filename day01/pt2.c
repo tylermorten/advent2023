@@ -96,7 +96,9 @@ int main(void)
 	const char* line2 = "nine";
 	assert(line_digits(line2) == 99);
 
-	Content c = read_input();
+	Content c = { 0 };
+	
+	read_input(&c);
 
 	long sum = 0;
 /*	for (int i = 0; i < (sizeof(input) / sizeof(char*)); ++i) {
